@@ -1,0 +1,188 @@
+/* ─── Shared shell ────────────────────────────────────────────────────────── */
+.topBorder {
+  width: 100%;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.borderImg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.bottomBar {
+  height: 64px;
+  background: #00b7ff;
+  flex-shrink: 0;
+}
+
+/* ─── Idle screen ─────────────────────────────────────────────────────────── */
+.idlePage {
+  height: 100svh;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+}
+
+.idleContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.75rem;
+  padding: 2rem;
+}
+
+.logo {
+  max-width: min(380px, 72vw);
+  height: auto;
+  filter: drop-shadow(0 0 18px rgba(0, 183, 255, 0.55));
+}
+
+.scanText {
+  font-size: clamp(0.85rem, 1.8vw, 1rem);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: #00b7ff;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.qrWrapper {
+  padding: 12px;
+  border: 1.5px solid rgba(0, 183, 255, 0.35);
+  /* Subtle glow around QR */
+  box-shadow: 0 0 20px rgba(0, 183, 255, 0.15);
+}
+
+.sessionLabel {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: rgba(0, 183, 255, 0.35);
+  text-transform: uppercase;
+}
+
+.sessionId {
+  color: rgba(0, 183, 255, 0.6);
+}
+
+/* ─── Loading screen ──────────────────────────────────────────────────────── */
+.loadingScreen {
+  height: 100svh;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.loadingFrame {
+  width: clamp(180px, 28vw, 320px);
+  height: auto;
+  filter: drop-shadow(0 0 24px rgba(0, 183, 255, 0.8));
+}
+
+.processingText {
+  font-family: 'Rajdhani', system-ui, sans-serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: 0.5em;
+  color: #00b7ff;
+  text-transform: uppercase;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* ─── Result screen ───────────────────────────────────────────────────────── */
+.resultPage {
+  height: 100svh;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+}
+
+.resultContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(2rem, 5vw, 4rem) clamp(2rem, 7vw, 6rem);
+  gap: 2rem;
+}
+
+.resultTextBlock {
+  border-left: 4px solid #00b7ff;
+  padding-left: clamp(1.2rem, 2.5vw, 2rem);
+}
+
+.resultText {
+  font-size: clamp(1.5rem, 3.8vw, 2.6rem);
+  font-weight: 700;
+  color: #00b7ff;
+  line-height: 1.45;
+  max-width: 72ch;
+  /* Subtle text glow for readability at distance */
+  text-shadow: 0 0 20px rgba(0, 183, 255, 0.3);
+}
+
+.restartButton {
+  background: transparent;
+  border: 2px solid #00b7ff;
+  color: #00b7ff;
+  font-family: 'Rajdhani', system-ui, sans-serif;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  padding: 0.7rem 2.5rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background 0.15s, color 0.15s;
+}
+
+.restartButton:hover,
+.restartButton:active {
+  background: #00b7ff;
+  color: #000;
+}
+
+.autoResetLabel {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: rgba(0, 183, 255, 0.35);
+  text-transform: uppercase;
+}
+
+/* ─── Error screen ────────────────────────────────────────────────────────── */
+.errorScreen {
+  height: 100svh;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.errorText {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: #ff5555;
+}
+
+.errorSubtext {
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: rgba(255, 85, 85, 0.7);
+}

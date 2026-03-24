@@ -1,0 +1,19 @@
+{
+  "name": "adeptus-mechanicus",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n \"backend,phone,tablet\" -c \"cyan.bold,green.bold,blue.bold\" \"pnpm dev:backend\" \"pnpm dev:phone\" \"pnpm dev:tablet\"",
+    "dev:backend": "pnpm --filter backend dev",
+    "dev:phone": "pnpm --filter phone dev",
+    "dev:tablet": "pnpm --filter tablet dev"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

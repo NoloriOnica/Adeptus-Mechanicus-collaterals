@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm install)",
+      "Bash(npm --version)",
+      "Bash(node --version)",
+      "Bash(npm install -g pnpm)",
+      "Bash(export PATH=\"/opt/homebrew/bin:$PATH\")",
+      "Bash(pnpm --version)",
+      "Bash(npx pnpm --version)",
+      "Bash(pnpm approve-builds)"
+    ]
+  }
+}
