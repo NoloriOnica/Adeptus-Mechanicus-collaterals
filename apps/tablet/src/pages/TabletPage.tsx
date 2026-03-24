@@ -4,13 +4,13 @@ import { QRCodeSVG } from 'qrcode.react';
 import { api, POLL_INTERVAL_MS, RESULT_AUTO_RESET_MS } from '@adeptus/shared';
 import styles from './TabletPage.module.css';
 
-// Loading frame imports — Vite resolves these as hashed asset URLs
-import frame1 from '../../../../assets/Loading 1:4.png';
-import frame2 from '../../../../assets/Loading 2:4.png';
-import frame3 from '../../../../assets/Loading 3:4.png';
-import frame4 from '../../../../assets/Loading 4:4.png';
-import logoImg from '../../../../assets/Logo.png';
-import borderImg from '../../../../assets/Border.png';
+// Assets from tablet_assets folder
+import frame1 from '../../../../tablet_assets/Loading 1:4.png';
+import frame2 from '../../../../tablet_assets/Loading 2:4.png';
+import frame3 from '../../../../tablet_assets/Loading 3:4.png';
+import frame4 from '../../../../tablet_assets/Loading 4:4.png';
+import logoImg from '../../../../tablet_assets/Logo.png';
+import borderImg from '../../../../tablet_assets/Border_Blue.png';
 
 const FRAMES = [frame1, frame2, frame3, frame4];
 const FRAME_INTERVAL_MS = 180;
@@ -118,8 +118,14 @@ export function TabletPage() {
   if (screen === 'loading') {
     return (
       <div className={styles.loadingScreen}>
-        <img src={FRAMES[frameIndex]} alt="" className={styles.loadingFrame} aria-hidden="true" />
-        <p className={styles.processingText}>PROCESSING…</p>
+        <img src={borderImg} alt="" className={styles.borderImg} aria-hidden="true" />
+
+        <div className={styles.loadingContent}>
+          <img src={FRAMES[frameIndex]} alt="" className={styles.loadingFrame} aria-hidden="true" />
+          <p className={styles.processingText}>PROCESSING…</p>
+        </div>
+
+        <div className={styles.bottomBar} />
       </div>
     );
   }
@@ -128,9 +134,7 @@ export function TabletPage() {
   if (screen === 'result') {
     return (
       <div className={styles.resultPage}>
-        <div className={styles.topBorder}>
-          <img src={borderImg} alt="" className={styles.borderImg} aria-hidden="true" />
-        </div>
+        <img src={borderImg} alt="" className={styles.borderImg} aria-hidden="true" />
 
         <div className={styles.resultContent}>
           <div className={styles.resultTextBlock}>
@@ -157,11 +161,17 @@ export function TabletPage() {
   if (screen === 'error') {
     return (
       <div className={styles.errorScreen}>
-        <p className={styles.errorText}>SYSTEM ERROR</p>
-        <p className={styles.errorSubtext}>The Machine Spirit is displeased.</p>
-        <button className={styles.restartButton} onClick={handleReset}>
-          RESTART
-        </button>
+        <img src={borderImg} alt="" className={styles.borderImg} aria-hidden="true" />
+
+        <div className={styles.errorContent}>
+          <p className={styles.errorText}>SYSTEM ERROR</p>
+          <p className={styles.errorSubtext}>The Machine Spirit is displeased.</p>
+          <button className={styles.restartButton} onClick={handleReset}>
+            RESTART
+          </button>
+        </div>
+
+        <div className={styles.bottomBar} />
       </div>
     );
   }
@@ -169,9 +179,7 @@ export function TabletPage() {
   // ─── Idle screen (default) ───────────────────────────────────────────────
   return (
     <div className={styles.idlePage}>
-      <div className={styles.topBorder}>
-        <img src={borderImg} alt="" className={styles.borderImg} aria-hidden="true" />
-      </div>
+      <img src={borderImg} alt="" className={styles.borderImg} aria-hidden="true" />
 
       <div className={styles.idleContent}>
         <img src={logoImg} alt="Adeptus Mechanicus" className={styles.logo} />
