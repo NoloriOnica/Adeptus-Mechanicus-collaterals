@@ -1,5 +1,11 @@
 import { API_BASE_URL } from './constants';
-import type { StatusResponse, SubmitRequest, SubmitResponse } from './types';
+import type {
+  InputLockRequest,
+  InputLockResponse,
+  StatusResponse,
+  SubmitRequest,
+  SubmitResponse,
+} from './types';
 
 async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${path}`, {
@@ -23,8 +29,23 @@ export const api = {
     });
   },
 
-  getStatus(sessionId: string): Promise<StatusResponse> {
-    return apiFetch<StatusResponse>(`/api/session/${sessionId}/status`);
+  getStatus(sessionId: string, clientId?: string): Promise<StatusResponse> {
+    const params = clientId ? `?clientId=${encodeURIComponent(clientId)}` : '';
+    return apiFetch<StatusResponse>(`/api/session/${sessionId}/status${params}`);
+  },
+
+  claimInput(sessionId: string, body: InputLockRequest): Promise<InputLockResponse> {
+    return apiFetch<InputLockResponse>(`/api/session/${sessionId}/claim-input`, {
+      method: 'POST',
+      body: JSON.stringify(body),
+    });
+  },
+
+  heartbeatInput(sessionId: string, body: InputLockRequest): Promise<InputLockResponse> {
+    return apiFetch<InputLockResponse>(`/api/session/${sessionId}/heartbeat-input`, {
+      method: 'POST',
+      body: JSON.stringify(body),
+    });
   },
 
   resetSession(sessionId: string): Promise<{ ok: boolean }> {
