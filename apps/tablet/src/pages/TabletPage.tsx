@@ -182,9 +182,9 @@ export function TabletPage() {
       <img src={borderImg} alt="" className={styles.borderImg} aria-hidden="true" />
 
       <div className={styles.idleContent}>
-        <img src={logoImg} alt="Adeptus Mechanicus" className={styles.logo} />
-
-        <p className={styles.scanText}>Scan the QR to begin</p>
+        <div className={styles.logoFrame}>
+          <img src={logoImg} alt="Adeptus Mechanicus" className={styles.logo} />
+        </div>
 
         <div className={styles.qrWrapper}>
           <QRCodeSVG
@@ -195,6 +195,8 @@ export function TabletPage() {
             level="M"
           />
         </div>
+
+        <p className={styles.scanText}>Scan the QR to begin</p>
 
         <p className={styles.sessionLabel}>
           SESSION: <span className={styles.sessionId}>{sessionId}</span>
