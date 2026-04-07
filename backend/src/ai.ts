@@ -4,7 +4,7 @@ import OpenAI from 'openai';
 // PLACEHOLDERS — Edit these before deploying
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-const OPENAI_API_KEY = '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';
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 const SYSTEM_PROMPT = `You are an artificial oracle embedded within a corporate system.
 
