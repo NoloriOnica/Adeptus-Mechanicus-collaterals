@@ -66,7 +66,8 @@ router.post('/session/:sessionId/submit', (req: Request, res: Response) => {
     .then((result) => {
       updateSession(sessionId, { status: 'done', result });
     })
-    .catch(() => {
+    .catch((error) => {
+      console.error('interpretConfession failed for session %s:', sessionId, error);
       updateSession(sessionId, { status: 'error', result: undefined });
     });
 

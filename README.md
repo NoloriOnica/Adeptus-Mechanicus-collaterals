@@ -6,7 +6,7 @@ A two-screen interactive installation:
 |-----|------|-------------|
 | **Phone** | User submits a confession | `http://localhost:5173` |
 | **Tablet** | Displays the AI interpretation | `http://localhost:5174` |
-| **Backend** | Manages sessions, runs AI stub | `http://localhost:3001` |
+| **Backend** | Manages sessions, runs AI inference | `http://localhost:3001` |
 
 ---
 
@@ -169,6 +169,32 @@ Vite imports them as hashed modules — no manual copying needed.
 
 ---
 
-## Connecting real AI
+## Render deployment
 
-Open `backend/src/ai.ts`. The `TODO` comment shows exactly where to drop in your OpenAI call — no keys or secrets are required to run the project with the built-in stub.
+This repo includes a root-level [`render.yaml`](./render.yaml) blueprint for:
+
+- `adeptus-backend` — Render web service
+- `adeptus-phone` — Render static site
+- `adeptus-tablet` — Render static site
+
+### Required environment variables
+
+Before the deployed app can work, set these values in Render:
+
+| Service | Variable | Example |
+|--------|----------|---------|
+| Backend | `OPENAI_API_KEY` | `sk-...` |
+| Backend | `CORS_ALLOWED_ORIGINS` | `https://adeptus-phone.onrender.com,https://adeptus-tablet.onrender.com` |
+| Phone | `VITE_API_BASE_URL` | `https://adeptus-backend.onrender.com` |
+| Tablet | `VITE_API_BASE_URL` | `https://adeptus-backend.onrender.com` |
+| Tablet | `VITE_PHONE_URL` | `https://adeptus-phone.onrender.com` |
+
+Use the `.env.example` files in:
+
+- `backend/.env.example`
+- `apps/phone/.env.example`
+- `apps/tablet/.env.example`
+
+### Important deployment note
+
+The backend currently stores sessions in memory. On Render free instances, the backend can spin down when idle, which clears active sessions. For an installation or live event, a paid instance or persistent datastore is safer.
