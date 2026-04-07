@@ -22,7 +22,6 @@ services:
   - type: web
     name: adeptus-phone
     runtime: static
-    plan: free
     buildCommand: pnpm install --frozen-lockfile && pnpm --filter phone build
     staticPublishPath: ./apps/phone/dist
     envVars:
@@ -45,7 +44,6 @@ services:
   - type: web
     name: adeptus-tablet
     runtime: static
-    plan: free
     buildCommand: pnpm install --frozen-lockfile && pnpm --filter tablet build
     staticPublishPath: ./apps/tablet/dist
     envVars:
