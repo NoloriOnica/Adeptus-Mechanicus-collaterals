@@ -9,10 +9,14 @@ const DEFAULT_ALLOWED_ORIGINS = [
   'http://localhost:5174',
 ];
 
+function normalizeOrigin(origin: string): string {
+  return origin.trim().replace(/^['"]|['"]$/g, '').replace(/\/$/, '');
+}
+
 function getAllowedOrigins(): string[] {
   const configured = process.env.CORS_ALLOWED_ORIGINS
     ?.split(',')
-    .map((origin) => origin.trim())
+    .map(normalizeOrigin)
     .filter(Boolean);
 
   return configured && configured.length > 0 ? configured : DEFAULT_ALLOWED_ORIGINS;
@@ -30,11 +34,14 @@ app.use(
         return;
       }
 
-      if (allowedOrigins.includes(origin)) {
+      const normalizedOrigin = normalizeOrigin(origin);
+
+      if (allowedOrigins.includes(normalizedOrigin)) {
         callback(null, true);
         return;
       }
 
+      console.error('CORS origin not allowed:', origin, 'allowed:', allowedOrigins);
       callback(new Error(`CORS origin not allowed: ${origin}`));
     },
     methods: ['GET', 'POST'],
