@@ -32,8 +32,10 @@ export function TabletPage() {
 
   const [screen, setScreen] = useState<Screen>('idle');
   const [result, setResult] = useState('');
+  const [typedResult, setTypedResult] = useState('');
   const [frameIndex, setFrameIndex] = useState(0);
   const [autoResetIn, setAutoResetIn] = useState<number | null>(null);
+  const [isTyping, setIsTyping] = useState(false);
 
   // Keep latest screen in a ref so async callbacks don't close over stale state
   const screenRef = useRef<Screen>('idle');
@@ -47,6 +49,53 @@ export function TabletPage() {
     const id = setInterval(() => setFrameIndex((i) => (i + 1) % FRAMES.length), FRAME_INTERVAL_MS);
     return () => clearInterval(id);
   }, [screen]);
+
+  // ─── Typewriter animation for result text ───────────────────────────────
+  useEffect(() => {
+    if (screen !== 'result' || !result) {
+      setTypedResult('');
+      setIsTyping(false);
+      return;
+    }
+
+    let index = 0;
+    let cancelled = false;
+    let timeoutId: number | undefined;
+
+    setTypedResult('');
+    setIsTyping(true);
+
+    const getDelay = (char: string) => {
+      if (char === '\n') return 180;
+      if (char === '.' || char === '!' || char === '?') return 110;
+      if (char === ',' || char === ';' || char === ':') return 75;
+      if (char === ' ') return 14;
+      return 26;
+    };
+
+    const typeNext = () => {
+      if (cancelled) return;
+
+      index += 1;
+      setTypedResult(result.slice(0, index));
+
+      if (index >= result.length) {
+        setIsTyping(false);
+        return;
+      }
+
+      timeoutId = window.setTimeout(typeNext, getDelay(result[index]));
+    };
+
+    timeoutId = window.setTimeout(typeNext, 220);
+
+    return () => {
+      cancelled = true;
+      if (timeoutId !== undefined) {
+        window.clearTimeout(timeoutId);
+      }
+    };
+  }, [screen, result]);
 
   // ─── Polling ────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -88,7 +137,9 @@ export function TabletPage() {
     }
     setScreen('idle');
     setResult('');
+    setTypedResult('');
     setAutoResetIn(null);
+    setIsTyping(false);
   }, [sessionId]);
 
   useEffect(() => {
@@ -138,7 +189,15 @@ export function TabletPage() {
 
         <div className={styles.resultContent}>
           <div className={styles.resultTextBlock}>
-            <p className={styles.resultText}>{result}</p>
+            <p className={styles.resultText}>
+              {typedResult}
+              <span
+                className={isTyping ? styles.typewriterCaret : styles.typewriterCaretIdle}
+                aria-hidden="true"
+              >
+                |
+              </span>
+            </p>
           </div>
 
           <button className={styles.restartButton} onClick={handleReset}>
